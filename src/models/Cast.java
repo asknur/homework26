@@ -22,7 +22,7 @@ public class Cast {
 
     @Override
     public String toString() {
-        String fmt = "Актер: %s в роли: %s %n";
+        String fmt = "Актер: %s. В роли: %s %n";
         return String.format(fmt, getFullname(), getRole());
     }
 }
