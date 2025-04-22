@@ -1,37 +1,43 @@
 import models.Director;
 import models.Film;
 import util.UtilFilms;
-
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        Film[] films = UtilFilms.readFilms();
-        for (Film film : films) {
-            System.out.println(film.toString());
+        Film[] fillms = UtilFilms.readFilms();
+        for (Film fillm : fillms) {
+            System.out.println(fillm.toString());
         }
 
-
-
-        List<Film> films1 = new ArrayList<>();
-        films1.add(new Film("The Hobbit", 2012, "TV Series", new Director("Peter Jackson"), new ArrayList<>()));
-        films1.add(new Film("Avengers: Endgame", 2019, "Movie", new Director("Peter Jackson"), new ArrayList<>()));
+        List<Film> filmList = new ArrayList<>();
+        filmList.add(new Film("Good omens", 2019, "TV Series", new Director("Douglas Mackinno"), new ArrayList<>()));
+        filmList.add(new Film("Carnival Row", 2019, "TV Series", new Director("Some Director"), new ArrayList<>()));
+        filmList.add(new Film("Harry Potter", 2005, "Movie",  new Director("Happy Guy"), new ArrayList<>()));
+        filmList.add(new Film("Hobbit: An Unexpected Journey", 2012, "Movie",  new Director("Peter Jackson"), new ArrayList<>()));
+        filmList.add(new Film("The Hobbit: The Desolation of Smaug", 2013, "Movie",  new Director("Peter Jackson"), new ArrayList<>()));
+        filmList.add(new Film("The Hobbit: The Battle of the Five Armies", 2014, "Movie",  new Director("Peter Jackson"), new ArrayList<>()));
+        filmList.add(new Film("Avengers: Endgame", 2019, "Movie",  new Director("Anthony Russo"), new ArrayList<>()));
+        filmList.add(new Film("Sherlock: Season 1", 2010, "TV Series",  new Director("Paul McGuigan"), new ArrayList<>()));
 
         System.out.print("Введите полное название для поиска: ");
         String userEnter = sc.nextLine();
-        Film.searchByFull(userEnter, films1);
+        Film.searchByFull(userEnter, filmList);
 
         System.out.print("Введите часть названия для поиска: ");
         String userEnter1 = sc.nextLine();
-        Film.searchByPartial(userEnter1, films1);
+        Film.searchByPartial(userEnter1, filmList);
 
-        Film.sortYear(films1);
+
+
+        Film.sortByYear(filmList);
+        Film.sortByYearReverse(filmList);
+        Film.sortByName(filmList);
+        Film.sortByNameReverse(filmList);
+        Film.sortByDirector(filmList);
+        Film.sortByDirectorReverse(filmList);
 
         sc.close();
     }
