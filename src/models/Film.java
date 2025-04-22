@@ -1,6 +1,6 @@
 package models;
 
-import java.util.List;
+import java.util.*;
 
 public class Film {
     private String name;
@@ -8,6 +8,7 @@ public class Film {
     private String description;
     private Director director;
     private List<Cast> cast;
+    private static final Scanner sc = new Scanner(System.in);
 
     public Film(String name, int year, String description, Director director, List<Cast> cast) {
         this.name = name;
@@ -55,6 +56,50 @@ public class Film {
 
     public void setCast(List<Cast> cast) {
         this.cast = cast;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Название: %s\n", getName()));
+        sb.append(String.format("Год выпуска: %d\n", getYear()));
+        sb.append(String.format("Тип: %s\n", getDescription()));
+        sb.append(String.format("Режиссер: %s\n", getDirector()));
+        sb.append(String.format("В ролях: %s\n", getCast()));
+        sb.append("---------------------------------------\n");
+        return sb.toString();
+    }
+
+    public static void searchByFull(String userEnter, List<Film> films) {
+        boolean state = false;
+        for (Film film : films) {
+            if (film.getName().equalsIgnoreCase(userEnter)) {
+                System.out.println("Полное совпадение: " + film);
+                state = true;
+            } else if (!state) {
+                System.out.println("Совпадение не найдено");
+            }
+        }
+    }
+
+    public static void searchByPartial(String userEnter, List<Film> films) {
+        boolean state = false;
+        for (Film film : films) {
+            if (film.getName().toLowerCase().contains(userEnter.toLowerCase())) {
+                System.out.println("Частичное совпадение: " + film);
+                state = true;
+            } else if (!state) {
+                System.out.println("Совпадение не найдено");
+            }
+        }
+    }
+
+    public static void sortYear(List<Film> films) {
+        films.sort(Comparator.comparingInt(Film :: getYear));
+        System.out.println("Отсортированный список фильмов по годам выпусков: ");
+        for (Film film : films) {
+            System.out.println(film);
+        }
     }
 
 }
