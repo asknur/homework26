@@ -2,13 +2,12 @@ package models;
 
 import java.util.*;
 
-public class Film {
+public class Film implements Comparable<Film> {
     private String name;
     private int year;
     private String description;
     private Director director;
     private List<Cast> cast;
-    private static final Scanner sc = new Scanner(System.in);
 
     public Film(String name, int year, String description, Director director, List<Cast> cast) {
         this.name = name;
@@ -76,9 +75,10 @@ public class Film {
             if (film.getName().equalsIgnoreCase(userEnter)) {
                 System.out.println("Полное совпадение: " + film);
                 state = true;
-            } else if (!state) {
-                System.out.println("Совпадение не найдено");
             }
+        }
+        if (!state) {
+            System.out.println("Совпадение не найдено");
         }
     }
 
@@ -88,18 +88,52 @@ public class Film {
             if (film.getName().toLowerCase().contains(userEnter.toLowerCase())) {
                 System.out.println("Частичное совпадение: " + film);
                 state = true;
-            } else if (!state) {
-                System.out.println("Совпадение не найдено");
             }
+        }
+        if (!state) {
+            System.out.println("Совпадение не найдено");
         }
     }
 
-    public static void sortYear(List<Film> films) {
-        films.sort(Comparator.comparingInt(Film :: getYear));
-        System.out.println("Отсортированный список фильмов по годам выпусков: ");
-        for (Film film : films) {
-            System.out.println(film);
-        }
+    @Override
+    public int compareTo(Film o) {
+        return Integer.compare(this.getYear(), o.getYear());
+    }
+
+    public static void sortByYear(List<Film> films) {
+        System.out.println("Сортировка по году выпуска по возвростанию:");
+        films.sort(Comparator.comparing(Film :: getYear));
+        films.forEach(System.out :: println);
+    }
+
+    public static void sortByYearReverse(List<Film> films) {
+        System.out.println("Сортировка по году выпуска по возвростанию:");
+        films.sort(Comparator.comparing(Film :: getYear).reversed());
+        films.forEach(System.out :: println);
+    }
+
+    public static void sortByName(List<Film> films) {
+        System.out.println("Сортировка по имени по алфавитному порядку:");
+        films.sort(Comparator.comparing(Film :: getName));
+        films.forEach(System.out :: println);
+    }
+
+    public static void sortByNameReverse(List<Film> films) {
+        System.out.println("ССортировка по имени по обратному алфавитному порядку:");
+        films.sort(Comparator.comparing(Film :: getName).reversed());
+        films.forEach(System.out :: println);
+    }
+
+    public static void sortByDirector(List<Film> films) {
+        System.out.println("Сортировка по имени по режиссеру A - Z:");
+        films.sort(Comparator.comparing((Film f) -> f.getDirector().getFullname()));
+        films.forEach(System.out :: println);
+    }
+
+    public static void sortByDirectorReverse(List<Film> films) {
+        System.out.println("Сортировка по имени по режиссеру Z - A:");
+        films.sort(Comparator.comparing((Film f) -> f.getDirector().getFullname()).reversed());
+        films.forEach(System.out :: println);
     }
 
 }
